@@ -3,6 +3,7 @@ import { EB_Garamond, Inter } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { ClerkProvider } from '@clerk/nextjs';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -29,6 +30,7 @@ export default function RootLayout({
       <html lang="en" className={cn(inter.variable, eb_garamong.variable)}>
         <body className="min-h-[calc(100vh-1px)] bg-brand-50 text-brand-950 antialiased flex flex-col">
           <main className="relative flex flex-1 flex-col">{children}</main>
+          <Toaster richColors />
         </body>
       </html>
     </ClerkProvider>

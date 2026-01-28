@@ -20,9 +20,6 @@ export async function POST(request: NextRequest) {
     // Add metadata
     const result = {
       ...analysis,
-      fileName: imageFile.name,
-      fileSize: imageFile.size,
-      fileType: imageFile.type,
       timestamp: new Date().toISOString(),
     };
 
