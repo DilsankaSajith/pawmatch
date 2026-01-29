@@ -27,9 +27,9 @@ const ImageUploader = ({
     onClientUploadComplete: ([data]) => {
       const reportId = data.serverData.reportId;
 
-      // startTransition(() => {
-      //   router.push(`/report/analysis?id=${reportId}`);
-      // });
+      startTransition(() => {
+        router.push(`/report/analysis?id=${reportId}`);
+      });
     },
     onUploadProgress(p) {
       setUploadProgress(p);
