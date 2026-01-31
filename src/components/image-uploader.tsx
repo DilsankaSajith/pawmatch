@@ -21,15 +21,12 @@ const ImageUploader = ({
 
   const [isPending, startTransition] = useTransition();
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const { startUpload, isUploading } = useUploadThing('imageUploader', {
     onClientUploadComplete: ([data]) => {
-      const reportId = data.serverData.reportId;
-
-      startTransition(() => {
-        router.push(`/report/analysis?id=${reportId}`);
-      });
+      const imageUrl = data.serverData.imageUrl;
+      localStorage.setItem('uploaded-image-url', imageUrl);
     },
     onUploadProgress(p) {
       setUploadProgress(p);

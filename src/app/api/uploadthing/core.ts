@@ -17,7 +17,8 @@ export const ourFileRouter = {
       // This code RUNS ON YOUR SERVER after upload
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       const { reportId } = metadata.input;
-      return { reportId };
+
+      return { reportId, imageUrl: file.ufsUrl };
     }),
 } satisfies FileRouter;
 

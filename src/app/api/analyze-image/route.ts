@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { analyzeStrayImage } from '@/lib/gemini-helper';
+import { sendDemoResult } from '@/lib/data';
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,7 +16,9 @@ export async function POST(request: NextRequest) {
     const base64 = Buffer.from(buffer).toString('base64');
 
     // Analyze with Gemini
-    const analysis = await analyzeStrayImage(base64, imageFile.type);
+    // const analysis = await analyzeStrayImage(base64, imageFile.type);
+
+    const analysis = await sendDemoResult();
 
     // Add metadata
     const result = {

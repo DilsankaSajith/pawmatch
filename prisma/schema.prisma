@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -13,9 +7,39 @@ datasource db {
   provider = "postgresql"
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  createdAt DateTime @default(now())
+enum Urgency {
+  Low
+  Medium
+  High
+  Urgent
+}
+
+model Report {
+  id            String   @id @default(cuid())
+  animalType    String
+  animalCount   Int
+  environment   String
+  urgency       Urgency  @default(Medium)
+  description   String
+  visibleIssues Issue[]
+  location      Location
+  timeStamp     DateTime @default(now())
+}
+
+model Issue {
+  id       String @id @default(cuid())
+  issue    String
+  reportId String
+
+  report Report? @relation(fields: [reportId], references: [id])
+
+  @@map("issues")
+}
+
+model Location {
+  id        String @id @default(cuid())
+  latitude  Float
+  longitude Float
+  report    Report @relation(fields: [reportId], references: [id])
+  reportId  String
 }

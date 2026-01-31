@@ -1,27 +1,41 @@
 'use client';
 
+import AnalysisReport from '@/components/analysis-report';
 import { DashboardPage } from '@/components/dashboard-page';
 import ImageUploader from '@/components/image-uploader';
+import { AnalysisResult } from '@/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
-
-interface AnalysisResult {
-  animalType: string;
-  animalCount: number;
-  visibleIssues: string[];
-  environment: string;
-  urgency: 'Low' | 'Medium' | 'High' | 'Urgent';
-  description: string;
-  timestamp?: string;
-}
 
 const Page = () => {
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
   const [analysing, setAnalysing] = useState<boolean>(false);
 
+  const getCurrentLocation = (): Promise<{ lat: number; lng: number }> => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          resolve({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => reject(error),
+      );
+    });
+  };
+
   const analyzeImage = async (image: File) => {
     try {
       setAnalysing(true);
+
+      // Get location
+      let location = null;
+      try {
+        location = await getCurrentLocation();
+      } catch (error) {
+        toast.warning('Location access denied');
+      }
 
       const formData = new FormData();
       formData.append('image', image);
@@ -37,7 +51,15 @@ const Page = () => {
       }
 
       const result = await response.json();
-      setAnalysis(result);
+
+      const analysisWithLocation = {
+        ...result,
+        location,
+        timestamp: new Date().toISOString(),
+      };
+
+      console.log(analysisWithLocation);
+      setAnalysis(analysisWithLocation);
     } catch (err) {
       console.log(err);
     } finally {
@@ -47,11 +69,14 @@ const Page = () => {
 
   return (
     <DashboardPage title="Report Stray">
-      <ImageUploader
-        postFileUpload={analyzeImage}
-        isPostUploadLoading={analysing}
-      />
-      <p>{analysing ? 'Analysing...' : analysis?.description}</p>
+      {analysis ? (
+        <AnalysisReport analysis={analysis} />
+      ) : (
+        <ImageUploader
+          postFileUpload={analyzeImage}
+          isPostUploadLoading={analysing}
+        />
+      )}
     </DashboardPage>
   );
 };
