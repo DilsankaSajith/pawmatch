@@ -14,7 +14,7 @@ const AnalysisReport = ({ analysis }: AnalysisReportProps) => {
 
   return (
     <div>
-      {analysis.animalCount}
+      {analysis.description}
       {imageUrl}
     </div>
   );
