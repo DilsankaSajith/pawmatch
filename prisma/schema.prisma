@@ -15,15 +15,15 @@ enum Urgency {
 }
 
 model Report {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
   animalType    String
   animalCount   Int
   environment   String
-  urgency       Urgency  @default(Medium)
+  urgency       Urgency   @default(Medium)
   description   String
   visibleIssues Issue[]
-  location      Location
-  timeStamp     DateTime @default(now())
+  location      Location?
+  timeStamp     DateTime  @default(now())
 }
 
 model Issue {
@@ -41,5 +41,5 @@ model Location {
   latitude  Float
   longitude Float
   report    Report @relation(fields: [reportId], references: [id])
-  reportId  String
+  reportId  String @unique
 }
