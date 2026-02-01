@@ -1,5 +1,6 @@
 import { AnalysisResult } from '@/types';
 import { useEffect, useState } from 'react';
+import ReportMap from './report-map';
 
 interface AnalysisReportProps {
   analysis: AnalysisResult;
@@ -16,6 +17,7 @@ const AnalysisReport = ({ analysis }: AnalysisReportProps) => {
     <div>
       {analysis.location?.lat}
       {imageUrl}
+      <ReportMap lat={analysis.location?.lat!} lng={analysis.location?.lng!} />
     </div>
   );
 };
