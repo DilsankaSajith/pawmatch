@@ -14,7 +14,7 @@ const AnalysisReport = ({ analysis }: AnalysisReportProps) => {
 
   return (
     <div>
-      {analysis.description}
+      {analysis.location?.lat}
       {imageUrl}
     </div>
   );
