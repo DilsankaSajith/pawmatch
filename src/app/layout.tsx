@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className={cn(inter.variable, eb_garamong.variable)}>
-        <body className="min-h-[calc(100vh-1px)] bg-brand-50 text-brand-950 antialiased flex flex-col">
+        <body className="min-h-[calc(100vh-1px)] bg-white text-brand-950 antialiased flex flex-col">
           <main className="relative flex flex-1 flex-col">{children}</main>
           <Toaster richColors />
         </body>

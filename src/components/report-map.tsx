@@ -13,7 +13,7 @@ type ReportMapProps = {
 
 const ReportMap = ({ lat, lng, zoom = 13 }: ReportMapProps) => {
   return (
-    <div className="h-100 w-full rounded-lg overflow-hidden">
+    <div className="h-[25rem] sm:h-[36.2rem] w-full rounded-lg overflow-hidden">
       <MapContainer
         center={[lat, lng]}
         zoom={zoom}

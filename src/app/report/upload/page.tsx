@@ -1,8 +1,9 @@
 'use client';
 
-import AnalysisReport from '@/components/analysis-report';
+import AnalysisReport from '@/app/report/upload/analysis-report';
 import { DashboardPage } from '@/components/dashboard-page';
 import ImageUploader from '@/components/image-uploader';
+import { MaxWidthWrapper } from '@/components/max-width-wrapper';
 import { AnalysisResult } from '@/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -69,14 +70,16 @@ const Page = () => {
 
   return (
     <DashboardPage title="Report Stray">
-      {analysis ? (
-        <AnalysisReport analysis={analysis} />
-      ) : (
-        <ImageUploader
-          postFileUpload={analyzeImage}
-          isPostUploadLoading={analysing}
-        />
-      )}
+      <MaxWidthWrapper>
+        {analysis ? (
+          <AnalysisReport analysis={analysis} />
+        ) : (
+          <ImageUploader
+            postFileUpload={analyzeImage}
+            isPostUploadLoading={analysing}
+          />
+        )}
+      </MaxWidthWrapper>
     </DashboardPage>
   );
 };
