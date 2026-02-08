@@ -24,6 +24,7 @@ model Report {
   visibleIssues Issue[]
   location      Location?
   timeStamp     DateTime  @default(now())
+  imageUrl      String?
 }
 
 model Issue {

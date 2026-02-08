@@ -15,14 +15,15 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { URGENCY } from '@/validators/option-validator';
 import { Textarea } from '@/components/ui/textarea';
+import { useMutation } from '@tanstack/react-query';
+import { postReport } from './actions';
 
 interface AnalysisReportProps {
   analysis: AnalysisResult;
 }
 
 const AnalysisReport = ({ analysis }: AnalysisReportProps) => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-
+  const [imageUrl, setImageUrl] = useState<string>('');
   const [editedAnalysis, setEditedAnalysis] =
     useState<AnalysisResult>(analysis);
 
@@ -30,9 +31,9 @@ const AnalysisReport = ({ analysis }: AnalysisReportProps) => {
     setImageUrl(localStorage.getItem('uploaded-image-url')!);
   }, []);
 
-  const handleSubmit = async () => {
-    console.log(editedAnalysis);
-  };
+  const { mutate: server_postReport, isPending } = useMutation({
+    mutationFn: postReport,
+  });
 
   return (
     <MaxWidthWrapper>
@@ -151,7 +152,12 @@ const AnalysisReport = ({ analysis }: AnalysisReportProps) => {
               >
                 Reset
               </Button>
-              <Button size="sm" onClick={() => handleSubmit()}>
+              <Button
+                size="sm"
+                onClick={() =>
+                  server_postReport({ imageUrl, analysis: editedAnalysis })
+                }
+              >
                 Confirm <ArrowRight className="h-4 w-4 ml-1.5 inline" />
               </Button>
             </div>

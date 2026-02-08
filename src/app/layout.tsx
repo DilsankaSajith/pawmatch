@@ -4,6 +4,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Toaster } from '@/components/ui/sonner';
+import { Providers } from '@/components/providers';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -29,7 +30,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className={cn(inter.variable, eb_garamong.variable)}>
         <body className="min-h-[calc(100vh-1px)] bg-white text-brand-950 antialiased flex flex-col">
-          <main className="relative flex flex-1 flex-col">{children}</main>
+          <main className="relative flex flex-1 flex-col">
+            <Providers>{children}</Providers>
+          </main>
           <Toaster richColors />
         </body>
       </html>
