@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 interface DashboardPageProps {
   title: string;
+  subtitle?: string;
   children?: ReactNode;
   hideBackButton?: boolean;
   cta?: ReactNode;
@@ -13,6 +14,7 @@ interface DashboardPageProps {
 
 export const DashboardPage = ({
   title,
+  subtitle,
   children,
   hideBackButton,
   cta,
@@ -28,7 +30,12 @@ export const DashboardPage = ({
               </Button>
             </Link>
           )}
-          <Heading>{title}</Heading>
+          <div className="flex flex-col gap-1">
+            <Heading>{title}</Heading>
+            {subtitle ? (
+              <p className="text-sm text-muted-foreground mt-2">{subtitle}</p>
+            ) : null}
+          </div>
           {cta ? <div>{cta}</div> : null}
         </div>
       </div>

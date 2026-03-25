@@ -6,7 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Check, ChevronsUpDown } from 'lucide-react';
+import { ArrowRight, Check, ChevronsUpDown, Loader2 } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +17,7 @@ import { URGENCY } from '@/validators/option-validator';
 import { Textarea } from '@/components/ui/textarea';
 import { useMutation } from '@tanstack/react-query';
 import { postReport } from './actions';
+import { toast } from 'sonner';
 
 interface AnalysisReportProps {
   analysis: AnalysisResult;
@@ -158,7 +159,14 @@ const AnalysisReport = ({ analysis }: AnalysisReportProps) => {
                   server_postReport({ imageUrl, analysis: editedAnalysis })
                 }
               >
-                Confirm <ArrowRight className="h-4 w-4 ml-1.5 inline" />
+                <p>
+                  Confirm{' '}
+                  {isPending ? (
+                    <Loader2 className="animate-spin h-4 w-4 ml-1.5 inline text-white" />
+                  ) : (
+                    <ArrowRight className="h-4 w-4 ml-1.5 inline" />
+                  )}
+                </p>
               </Button>
             </div>
           </div>

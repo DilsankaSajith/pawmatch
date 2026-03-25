@@ -3,7 +3,6 @@ import { Image, Loader2, MousePointerSquareDashed } from 'lucide-react';
 import Dropzone, { FileRejection } from 'react-dropzone';
 import { Progress } from './ui/progress';
 import { useState, useTransition } from 'react';
-import { useRouter } from 'next/navigation';
 import { useUploadThing } from '@/lib/uploadthing';
 import { toast } from 'sonner';
 

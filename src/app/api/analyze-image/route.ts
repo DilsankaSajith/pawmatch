@@ -16,9 +16,9 @@ export async function POST(request: NextRequest) {
     const base64 = Buffer.from(buffer).toString('base64');
 
     // Analyze with Gemini
-    // const analysis = await analyzeStrayImage(base64, imageFile.type);
+    const analysis = await analyzeStrayImage(base64, imageFile.type);
 
-    const analysis = await sendDemoResult();
+    // const analysis = await sendDemoResult();
 
     // Add metadata
     const result = {

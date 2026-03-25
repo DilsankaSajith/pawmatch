@@ -59,7 +59,6 @@ const Page = () => {
         timestamp: new Date().toISOString(),
       };
 
-      console.log(analysisWithLocation);
       setAnalysis(analysisWithLocation);
     } catch (err) {
       console.log(err);
@@ -69,7 +68,7 @@ const Page = () => {
   };
 
   return (
-    <DashboardPage title="Report Stray">
+    <DashboardPage title="Rescue Starts With You" subtitle="Your small action can lead to a safer, happier life for a stray ❤️">
       <MaxWidthWrapper>
         {analysis ? (
           <AnalysisReport analysis={analysis} />
