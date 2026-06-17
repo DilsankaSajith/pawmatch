@@ -1,8 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import Heading from "@/components/heading";
-import { buttonVariants } from "@/components/ui/button";
+import Image from 'next/image';
+import Link from 'next/link';
+import { MaxWidthWrapper } from '@/components/max-width-wrapper';
+import Heading from '@/components/heading';
+import { buttonVariants } from '@/components/ui/button';
 import {
   ArrowRight,
   Heart,
@@ -20,7 +20,8 @@ import {
   ClipboardCheck,
   Code2,
   AlertTriangle,
-} from "lucide-react";
+} from 'lucide-react';
+import ShinyButton from '@/components/shiny-button';
 
 const Page = () => {
   return (
@@ -42,43 +43,37 @@ const Page = () => {
               </div>
 
               <Heading className="!text-5xl sm:!text-6xl lg:!text-7xl !leading-[1.1] !tracking-tight">
-                Rescue,{" "}
+                Rescue,{' '}
                 <span className="relative">
                   <span className="relative z-10 bg-gradient-to-r from-brand-600 to-brand-800 bg-clip-text text-transparent">
                     Rehome,
                   </span>
                 </span>
-                <br />
-                & Reunite
+                <br />& Reunite
               </Heading>
 
               <p className="mt-6 max-w-lg text-lg text-zinc-600 leading-relaxed">
                 Sri Lanka&apos;s intelligent platform for stray animal
                 management. Report strays with photos &amp; GPS, let AI classify
-                urgency, and connect animals with shelters and loving homes — all
-                in one place.
+                urgency, and connect animals with shelters and loving homes —
+                all in one place.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/sign-up"
-                  className={buttonVariants({
-                    size: "lg",
-                    className:
-                      "!text-base !px-8 !py-6 !rounded-xl gap-2 shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/30 transition-all duration-300",
-                  })}
+                <ShinyButton
+                  href="/dashboard"
+                  className="relative z-10 h-14 w-full max-w-xs text-base shadow-lg transition-shadow duration-300 hover:shadow-xl"
                 >
                   Get Started
-                  <ArrowRight className="size-5" />
-                </Link>
+                </ShinyButton>
 
                 <Link
                   href="/report/upload"
                   className={buttonVariants({
-                    variant: "outline",
-                    size: "lg",
+                    variant: 'outline',
+                    size: 'lg',
                     className:
-                      "!text-base !px-8 !py-6 !rounded-xl gap-2 border-brand-200 text-brand-700 hover:bg-brand-50 transition-all duration-300",
+                      '!text-base !px-8 !py-6 !rounded-xl gap-2 border-brand-200 text-brand-700 hover:bg-brand-50 transition-all duration-300',
                   })}
                 >
                   <Camera className="size-5" />
@@ -108,8 +103,8 @@ const Page = () => {
                     ))}
                   </div>
                   <p className="text-sm text-zinc-500 mt-0.5">
-                    Trusted by{" "}
-                    <span className="font-semibold text-zinc-700">500+</span>{" "}
+                    Trusted by{' '}
+                    <span className="font-semibold text-zinc-700">500+</span>{' '}
                     citizens &amp; shelters
                   </p>
                 </div>
@@ -178,11 +173,11 @@ const Page = () => {
           </p>
           <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
             {[
-              { icon: AlertTriangle, label: "AI Urgency Triage" },
-              { icon: MapPin, label: "GPS Reporting" },
-              { icon: BarChart3, label: "Hotspot Analytics" },
-              { icon: WifiOff, label: "Offline Support" },
-              { icon: Code2, label: "Developer APIs" },
+              { icon: AlertTriangle, label: 'AI Urgency Triage' },
+              { icon: MapPin, label: 'GPS Reporting' },
+              { icon: BarChart3, label: 'Hotspot Analytics' },
+              { icon: WifiOff, label: 'Offline Support' },
+              { icon: Code2, label: 'Developer APIs' },
             ].map(({ icon: Icon, label }) => (
               <div
                 key={label}
@@ -206,7 +201,7 @@ const Page = () => {
                 The Problem
               </div>
               <Heading className="!text-3xl sm:!text-4xl">
-                Stray Animal Management in Sri Lanka is{" "}
+                Stray Animal Management in Sri Lanka is{' '}
                 <span className="bg-gradient-to-r from-rose-500 to-rose-700 bg-clip-text text-transparent">
                   Broken
                 </span>
@@ -222,24 +217,24 @@ const Page = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 {
-                  stat: "No",
-                  label: "Centralized Reporting System",
-                  color: "text-rose-500",
+                  stat: 'No',
+                  label: 'Centralized Reporting System',
+                  color: 'text-rose-500',
                 },
                 {
-                  stat: "Fragmented",
-                  label: "Citizen-Shelter Communication",
-                  color: "text-amber-500",
+                  stat: 'Fragmented',
+                  label: 'Citizen-Shelter Communication',
+                  color: 'text-amber-500',
                 },
                 {
-                  stat: "Manual",
-                  label: "Adoption Processes",
-                  color: "text-orange-500",
+                  stat: 'Manual',
+                  label: 'Adoption Processes',
+                  color: 'text-orange-500',
                 },
                 {
-                  stat: "Zero",
-                  label: "Data-Driven Decision Making",
-                  color: "text-red-500",
+                  stat: 'Zero',
+                  label: 'Data-Driven Decision Making',
+                  color: 'text-red-500',
                 },
               ].map(({ stat, label, color }) => (
                 <div
@@ -264,7 +259,7 @@ const Page = () => {
               Core Features
             </div>
             <Heading className="!text-3xl sm:!text-4xl">
-              Everything Needed for{" "}
+              Everything Needed for{' '}
               <span className="bg-gradient-to-r from-brand-600 to-brand-800 bg-clip-text text-transparent">
                 Animal Rescue
               </span>
@@ -279,51 +274,51 @@ const Page = () => {
             {[
               {
                 icon: Camera,
-                title: "Stray Reporting System",
+                title: 'Stray Reporting System',
                 description:
-                  "Report stray animals with photos, GPS location, and descriptions. AI automatically classifies urgency — Urgent, High, Average, or Low.",
-                color: "#3b82f6",
-                bg: "bg-blue-50",
+                  'Report stray animals with photos, GPS location, and descriptions. AI automatically classifies urgency — Urgent, High, Average, or Low.',
+                color: '#3b82f6',
+                bg: 'bg-blue-50',
               },
               {
                 icon: Sparkles,
-                title: "AI Urgency Classification",
+                title: 'AI Urgency Classification',
                 description:
-                  "Powered by Gemini API, our AI analyzes images and text to triage reports by severity, ensuring the most critical cases get immediate attention.",
-                color: "#8b5cf6",
-                bg: "bg-violet-50",
+                  'Powered by Gemini API, our AI analyzes images and text to triage reports by severity, ensuring the most critical cases get immediate attention.',
+                color: '#8b5cf6',
+                bg: 'bg-violet-50',
               },
               {
                 icon: Stethoscope,
-                title: "Pet Profile Management",
+                title: 'Pet Profile Management',
                 description:
-                  "Create detailed pet profiles tracking health, vaccinations, behavior, and adoption readiness. Manage listings for shelters and volunteers.",
-                color: "#10b981",
-                bg: "bg-emerald-50",
+                  'Create detailed pet profiles tracking health, vaccinations, behavior, and adoption readiness. Manage listings for shelters and volunteers.',
+                color: '#10b981',
+                bg: 'bg-emerald-50',
               },
               {
                 icon: ClipboardCheck,
-                title: "Adoption Workflow",
+                title: 'Adoption Workflow',
                 description:
-                  "End-to-end adoption pipeline — browse pets, submit applications, admin review, and status notifications until the pet finds a forever home.",
-                color: "#f59e0b",
-                bg: "bg-amber-50",
+                  'End-to-end adoption pipeline — browse pets, submit applications, admin review, and status notifications until the pet finds a forever home.',
+                color: '#f59e0b',
+                bg: 'bg-amber-50',
               },
               {
                 icon: BarChart3,
-                title: "Hotspot Heatmaps",
+                title: 'Hotspot Heatmaps',
                 description:
                   "Identify abandonment hotspots with interactive heatmaps. Data-driven analytics help shelters allocate resources where they're needed most.",
-                color: "#f43f5e",
-                bg: "bg-rose-50",
+                color: '#f43f5e',
+                bg: 'bg-rose-50',
               },
               {
                 icon: WifiOff,
-                title: "Offline Capability",
+                title: 'Offline Capability',
                 description:
                   "Submit reports without internet connection. Data is saved locally and auto-syncs when you're back online — built for low-bandwidth areas.",
-                color: "#6991d2",
-                bg: "bg-brand-50",
+                color: '#6991d2',
+                bg: 'bg-brand-50',
               },
             ].map(({ icon: Icon, title, description, color, bg }) => (
               <div
@@ -360,7 +355,7 @@ const Page = () => {
               How It Works
             </div>
             <Heading className="!text-3xl sm:!text-4xl">
-              From Street to{" "}
+              From Street to{' '}
               <span className="bg-gradient-to-r from-brand-600 to-brand-800 bg-clip-text text-transparent">
                 Safe Home
               </span>
@@ -377,24 +372,24 @@ const Page = () => {
 
             {[
               {
-                step: "01",
-                title: "Report with Photo & GPS",
+                step: '01',
+                title: 'Report with Photo & GPS',
                 description:
-                  "Spot a stray? Snap a photo, tag the GPS location, and submit a report — even offline. It auto-syncs when you reconnect.",
+                  'Spot a stray? Snap a photo, tag the GPS location, and submit a report — even offline. It auto-syncs when you reconnect.',
                 icon: Camera,
               },
               {
-                step: "02",
-                title: "AI Triages & Matches",
+                step: '02',
+                title: 'AI Triages & Matches',
                 description:
-                  "Our AI classifies urgency (Urgent / High / Average / Low) and matches the report with nearby shelters and existing lost-pet listings.",
+                  'Our AI classifies urgency (Urgent / High / Average / Low) and matches the report with nearby shelters and existing lost-pet listings.',
                 icon: Sparkles,
               },
               {
-                step: "03",
-                title: "Shelter Manages & Adopts",
+                step: '03',
+                title: 'Shelter Manages & Adopts',
                 description:
-                  "Shelters receive reports, create pet profiles, track health & vaccinations, and process adoption applications through a streamlined workflow.",
+                  'Shelters receive reports, create pet profiles, track health & vaccinations, and process adoption applications through a streamlined workflow.',
                 icon: Heart,
               },
             ].map(({ step, title, description, icon: Icon }) => (
@@ -428,7 +423,7 @@ const Page = () => {
               Built for Everyone
             </div>
             <Heading className="!text-3xl sm:!text-4xl">
-              One Platform,{" "}
+              One Platform,{' '}
               <span className="bg-gradient-to-r from-brand-600 to-brand-800 bg-clip-text text-transparent">
                 Many Roles
               </span>
@@ -442,44 +437,44 @@ const Page = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                role: "Public Citizen",
+                role: 'Public Citizen',
                 description:
                   "Spot and report stray animals with photos and GPS. Track your reports and see the impact you're making in your community.",
                 icon: Camera,
-                color: "#3b82f6",
-                bg: "bg-blue-50",
+                color: '#3b82f6',
+                bg: 'bg-blue-50',
               },
               {
-                role: "Adopter",
+                role: 'Adopter',
                 description:
-                  "Browse available pets, get AI-powered recommendations, submit adoption applications, and track your application status.",
+                  'Browse available pets, get AI-powered recommendations, submit adoption applications, and track your application status.',
                 icon: Heart,
-                color: "#f43f5e",
-                bg: "bg-rose-50",
+                color: '#f43f5e',
+                bg: 'bg-rose-50',
               },
               {
-                role: "Volunteer",
+                role: 'Volunteer',
                 description:
-                  "Help manage pet profiles, upload photos, update health records, and support shelters with day-to-day operations.",
+                  'Help manage pet profiles, upload photos, update health records, and support shelters with day-to-day operations.',
                 icon: Users,
-                color: "#10b981",
-                bg: "bg-emerald-50",
+                color: '#10b981',
+                bg: 'bg-emerald-50',
               },
               {
-                role: "Shelter Admin",
+                role: 'Shelter Admin',
                 description:
                   "Manage your shelter's animals, review adoption applications, track health & vaccinations, and access hotspot analytics.",
                 icon: Shield,
-                color: "#f59e0b",
-                bg: "bg-amber-50",
+                color: '#f59e0b',
+                bg: 'bg-amber-50',
               },
               {
-                role: "Developer",
+                role: 'Developer',
                 description:
-                  "Access PawMatch APIs — Text Similarity, Data Structuring, and Hotspot Analytics — with API key generation and docs.",
+                  'Access PawMatch APIs — Text Similarity, Data Structuring, and Hotspot Analytics — with API key generation and docs.',
                 icon: Code2,
-                color: "#8b5cf6",
-                bg: "bg-violet-50",
+                color: '#8b5cf6',
+                bg: 'bg-violet-50',
               },
             ].map(({ role, description, icon: Icon, color, bg }) => (
               <div
@@ -510,7 +505,7 @@ const Page = () => {
               Testimonials
             </div>
             <Heading className="!text-3xl sm:!text-4xl">
-              Stories That{" "}
+              Stories That{' '}
               <span className="bg-gradient-to-r from-brand-600 to-brand-800 bg-clip-text text-transparent">
                 Warm Hearts
               </span>
@@ -520,24 +515,24 @@ const Page = () => {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                name: "Kumari Perera",
-                role: "Pet Adopter, Colombo",
+                name: 'Kumari Perera',
+                role: 'Pet Adopter, Colombo',
                 quote:
                   "I found my dog Bella through PawMatch's AI recommendations. The adoption workflow was so smooth — from application to approval, everything was transparent and quick.",
                 stars: 5,
               },
               {
-                name: "Arjun Fernando",
-                role: "Rescue Volunteer, Kandy",
+                name: 'Arjun Fernando',
+                role: 'Rescue Volunteer, Kandy',
                 quote:
                   "The reporting tool is a lifesaver. I can photograph strays and submit reports even when I'm in areas with poor connectivity. It syncs automatically when I get back online.",
                 stars: 5,
               },
               {
-                name: "Nadia Jayasinghe",
-                role: "Shelter Manager, Galle",
+                name: 'Nadia Jayasinghe',
+                role: 'Shelter Manager, Galle',
                 quote:
-                  "The hotspot heatmaps changed how we allocate our rescue teams. We can now prioritize areas with the highest concentration of strays. The urgency AI is incredibly accurate.",
+                  'The hotspot heatmaps changed how we allocate our rescue teams. We can now prioritize areas with the highest concentration of strays. The urgency AI is incredibly accurate.',
                 stars: 5,
               },
             ].map(({ name, role, quote, stars }) => (
@@ -559,9 +554,9 @@ const Page = () => {
                 <div className="flex items-center gap-3">
                   <div className="size-11 rounded-full bg-gradient-to-br from-brand-400 to-brand-700 flex items-center justify-center text-white font-semibold text-sm">
                     {name
-                      .split(" ")
+                      .split(' ')
                       .map((n) => n[0])
-                      .join("")}
+                      .join('')}
                   </div>
                   <div>
                     <p className="font-semibold text-zinc-900">{name}</p>
@@ -581,10 +576,10 @@ const Page = () => {
         <MaxWidthWrapper>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { value: "1,200+", label: "Animals Rescued" },
-              { value: "5,000+", label: "Strays Reported" },
-              { value: "150+", label: "Partner Shelters" },
-              { value: "10K+", label: "Active Community Members" },
+              { value: '1,200+', label: 'Animals Rescued' },
+              { value: '5,000+', label: 'Strays Reported' },
+              { value: '150+', label: 'Partner Shelters' },
+              { value: '10K+', label: 'Active Community Members' },
             ].map(({ value, label }) => (
               <div key={label}>
                 <p className="text-4xl md:text-5xl font-bold text-white mb-2 font-heading">
@@ -609,7 +604,7 @@ const Page = () => {
             </div>
 
             <Heading className="!text-3xl sm:!text-4xl lg:!text-5xl">
-              Ready to Make a{" "}
+              Ready to Make a{' '}
               <span className="bg-gradient-to-r from-brand-600 to-brand-800 bg-clip-text text-transparent">
                 Difference?
               </span>
@@ -622,25 +617,20 @@ const Page = () => {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                href="/sign-up"
-                className={buttonVariants({
-                  size: "lg",
-                  className:
-                    "!text-base !px-10 !py-6 !rounded-xl gap-2 shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/30 transition-all duration-300",
-                })}
+              <ShinyButton
+                href="/dashboard"
+                className="relative z-10 h-14 w-full max-w-xs text-base shadow-lg transition-shadow duration-300 hover:shadow-xl"
               >
                 Join PawMatch
-                <ArrowRight className="size-5" />
-              </Link>
+              </ShinyButton>
 
               <Link
                 href="/report/upload"
                 className={buttonVariants({
-                  variant: "outline",
-                  size: "lg",
+                  variant: 'outline',
+                  size: 'lg',
                   className:
-                    "!text-base !px-10 !py-6 !rounded-xl gap-2 border-brand-200 text-brand-700 hover:bg-brand-50 transition-all duration-300",
+                    '!text-base !px-10 !py-6 !rounded-xl gap-2 border-brand-200 text-brand-700 hover:bg-brand-50 transition-all duration-300',
                 })}
               >
                 Report a Stray
@@ -671,30 +661,7 @@ const Page = () => {
                 Platform
               </p>
               <ul className="space-y-3">
-                {[
-                  "Report a Stray",
-                  "Browse Pets",
-                  "Adopt",
-                  "Dashboard",
-                ].map((item) => (
-                  <li key={item}>
-                    <Link
-                      href="#"
-                      className="text-sm text-zinc-500 hover:text-brand-600 transition-colors"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <p className="font-semibold text-zinc-900 mb-4 text-sm uppercase tracking-wider">
-                Resources
-              </p>
-              <ul className="space-y-3">
-                {["API Documentation", "Analytics", "FAQ", "Support"].map(
+                {['Report a Stray', 'Browse Pets', 'Adopt', 'Dashboard'].map(
                   (item) => (
                     <li key={item}>
                       <Link
@@ -704,7 +671,27 @@ const Page = () => {
                         {item}
                       </Link>
                     </li>
-                  )
+                  ),
+                )}
+              </ul>
+            </div>
+
+            <div>
+              <p className="font-semibold text-zinc-900 mb-4 text-sm uppercase tracking-wider">
+                Resources
+              </p>
+              <ul className="space-y-3">
+                {['API Documentation', 'Analytics', 'FAQ', 'Support'].map(
+                  (item) => (
+                    <li key={item}>
+                      <Link
+                        href="#"
+                        className="text-sm text-zinc-500 hover:text-brand-600 transition-colors"
+                      >
+                        {item}
+                      </Link>
+                    </li>
+                  ),
                 )}
               </ul>
             </div>
@@ -714,7 +701,7 @@ const Page = () => {
                 Company
               </p>
               <ul className="space-y-3">
-                {["About", "Shelters", "Privacy", "Terms"].map((item) => (
+                {['About', 'Shelters', 'Privacy', 'Terms'].map((item) => (
                   <li key={item}>
                     <Link
                       href="#"
@@ -734,7 +721,7 @@ const Page = () => {
               &copy; {new Date().getFullYear()} PawMatch. All rights reserved.
             </p>
             <div className="flex items-center gap-1 text-sm text-zinc-400">
-              Made with{" "}
+              Made with{' '}
               <Heart className="size-4 fill-rose-500 text-rose-500 mx-1" /> for
               Sri Lanka&apos;s animals
             </div>

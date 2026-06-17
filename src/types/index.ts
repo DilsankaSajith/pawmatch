@@ -11,3 +11,5 @@ export interface AnalysisResult {
     lng: number;
   };
 }
+
+export type UserRole = 'Adopter' | 'Volunteer' | 'Shelter_Admin' | 'Developer';

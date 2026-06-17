@@ -1,10 +1,10 @@
-import { currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import { DashboardPage } from "../../components/dashboard-page";
-import { Button } from "@/components/ui/button";
-import { PlusIcon, SearchX } from "lucide-react";
-import { mockPets } from "@/lib/pet-mock-data";
-import { PetCard } from "@/components/browse-pets/pet-card";
+import { currentUser } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
+import { DashboardPage } from '../../components/dashboard-page';
+import { Button } from '@/components/ui/button';
+import { PlusIcon, SearchX } from 'lucide-react';
+import { mockPets } from '@/lib/pet-mock-data';
+import { PetCard } from '@/components/browse-pets/pet-card';
 
 interface PageProps {
   searchParams: Promise<{
@@ -22,10 +22,11 @@ const Page = async ({ searchParams }: PageProps) => {
   const auth = await currentUser();
 
   if (!auth) {
-    redirect("/sign-in");
+    redirect('/sign-in');
   }
 
-  const { type, age, gender, size, vaccinated, neutered, sort } = await searchParams;
+  const { type, age, gender, size, vaccinated, neutered, sort } =
+    await searchParams;
 
   const filteredPets = mockPets
     .filter((pet) => {
@@ -35,10 +36,12 @@ const Page = async ({ searchParams }: PageProps) => {
       // Age filter
       if (age) {
         const petAgeYears = pet.age / 12;
-        if (age === "puppy" && pet.age >= 12) return false;
-        if (age === "young" && (petAgeYears < 1 || petAgeYears >= 3)) return false;
-        if (age === "adult" && (petAgeYears < 3 || petAgeYears >= 7)) return false;
-        if (age === "senior" && petAgeYears < 7) return false;
+        if (age === 'puppy' && pet.age >= 12) return false;
+        if (age === 'young' && (petAgeYears < 1 || petAgeYears >= 3))
+          return false;
+        if (age === 'adult' && (petAgeYears < 3 || petAgeYears >= 7))
+          return false;
+        if (age === 'senior' && petAgeYears < 7) return false;
       }
 
       // Gender filter
@@ -48,15 +51,15 @@ const Page = async ({ searchParams }: PageProps) => {
       if (size && pet.size !== size) return false;
 
       // Health filters
-      if (vaccinated === "true" && !pet.vaccinated) return false;
-      if (neutered === "true" && !pet.neutered) return false;
+      if (vaccinated === 'true' && !pet.vaccinated) return false;
+      if (neutered === 'true' && !pet.neutered) return false;
 
       return true;
     })
     .sort((a, b) => {
       const dateA = new Date(a.addedAt).getTime();
       const dateB = new Date(b.addedAt).getTime();
-      return sort === "oldest" ? dateA - dateB : dateB - dateA;
+      return sort === 'oldest' ? dateA - dateB : dateB - dateA;
     });
 
   return (
@@ -83,7 +86,8 @@ const Page = async ({ searchParams }: PageProps) => {
           </div>
           <h3 className="text-lg font-bold text-gray-900">No pets found</h3>
           <p className="text-gray-500 max-w-xs mx-auto mt-2">
-            Try adjusting your filters or search keywords to find what you're looking for.
+            Try adjusting your filters or search keywords to find what you're
+            looking for.
           </p>
           <Button variant="outline" className="mt-6" asChild>
             <a href="/dashboard">Clear all filters</a>
