@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { PlusIcon, SearchX } from 'lucide-react';
 import { mockPets } from '@/lib/pet-mock-data';
 import { PetCard } from '@/components/browse-pets/pet-card';
+import { CreatePetProfileModal } from '@/components/create-pet-profile-modal';
 
 interface PageProps {
   searchParams: Promise<{
@@ -67,10 +68,12 @@ const Page = async ({ searchParams }: PageProps) => {
       title="Find Your Friend"
       subtitle="Browse rescued animals waiting for a loving home — every adoption makes a difference."
       cta={
-        <Button>
-          <PlusIcon className="size-4 mr-2" />
-          Add Pet
-        </Button>
+        <CreatePetProfileModal>
+          <Button>
+            <PlusIcon className="size-4 mr-2" />
+            Add Pet
+          </Button>
+        </CreatePetProfileModal>
       }
     >
       {filteredPets.length > 0 ? (

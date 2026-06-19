@@ -18,3 +18,20 @@ export const URGENCY = {
     },
   ],
 } as const;
+
+export const HEALTH_CONDITION = {
+  options: [
+    {
+      label: 'Happy & Healthy 🐾',
+      value: 'Healthy',
+    },
+    {
+      label: 'Getting Better 🌱',
+      value: 'Recovering',
+    },
+    {
+      label: 'Requires Attention 🤗',
+      value: 'Critical',
+    },
+  ],
+} as const;

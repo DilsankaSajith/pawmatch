@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { UserRole } from '@/types';
 import { Heart, Users, ShieldCheck, Terminal } from 'lucide-react';
 import ShinyButton from '@/components/shiny-button';
+import { useMutation } from '@tanstack/react-query';
+import { saveUserWithRole } from './actions';
+import { useRouter } from 'next/navigation';
 
 const roles = [
   {
@@ -35,6 +38,19 @@ const roles = [
 
 export default function OnboardingPage() {
   const [selected, setSelected] = useState<UserRole | null>(null);
+  const router = useRouter();
+
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: (role: UserRole) => saveUserWithRole(role),
+    onSuccess: () => {
+      router.push('/dashboard');
+    },
+  });
+
+  const handleContinue = () => {
+    if (!selected) return;
+    mutate(selected);
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 px-4">
@@ -69,13 +85,12 @@ export default function OnboardingPage() {
       </div>
 
       <ShinyButton
+        onClick={handleContinue}
         href="/dashboard"
         className={`relative z-10 h-14 w-full max-w-xs text-base shadow-lg transition-shadow duration-300 hover:shadow-xl `}
       >
-        Continue
+        {isPending ? 'Saving...' : 'Continue'}
       </ShinyButton>
-
-      <p>{selected}</p>
     </div>
   );
 }

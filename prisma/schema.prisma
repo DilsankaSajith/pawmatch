@@ -21,6 +21,23 @@ enum Role {
   Developer
 }
 
+enum Gender {
+  Male
+  Female
+}
+
+enum Health_Condition {
+  Healthy
+  Recovering
+  Critical
+}
+
+enum Adoption_Status {
+  Ready
+  Pending
+  Not_Ready
+}
+
 model Report {
   id            String    @id @default(cuid())
   animalType    String
@@ -45,21 +62,56 @@ model Issue {
 }
 
 model Location {
-  id        String @id @default(cuid())
+  id        String  @id @default(cuid())
   latitude  Float
   longitude Float
-  report    Report @relation(fields: [reportId], references: [id])
-  reportId  String @unique
+  report    Report? @relation(fields: [reportId], references: [id])
+  reportId  String? @unique
+  pets      Pet[]
 }
 
 model User {
-  id         String   @id @default(cuid())
-  externalId String?  @unique
-  email      String   @unique
-  apiKey     String?  @unique @default(uuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  role       Role     @default(Adopter)
+  id                String        @id @default(cuid())
+  externalId        String?       @unique
+  email             String        @unique
+  apiKey            String?       @unique @default(uuid())
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  role              Role          @default(Adopter)
+  pets              Pet[]
+  applications      Application[] @relation("ApplicantApplications")
+  addedApplications Application[] @relation("AddedByApplications")
 
   @@index([email, apiKey])
+}
+
+model Pet {
+  id                 String           @id @default(cuid())
+  name               String
+  age                Int
+  breed              String
+  gender             Gender           @default(Male)
+  description        String
+  location           Location?        @relation(fields: [locationId], references: [id])
+  adoptionStatus     Adoption_Status  @default(Ready)
+  addedBy            User             @relation(fields: [userId], references: [id])
+  imageUrl           String?
+  lastVaccinatedDate String?
+  healthCondition    Health_Condition @default(Healthy)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  locationId   String?
+  userId       String
+  applications Application[]
+}
+
+model Application {
+  id          String @id @default(cuid())
+  pet         Pet    @relation(fields: [petId], references: [id])
+  applicant   User   @relation("ApplicantApplications", fields: [applicantId], references: [id])
+  addedBy     User   @relation("AddedByApplications", fields: [addedById], references: [id])
+  petId       String
+  applicantId String
+  addedById   String
 }
