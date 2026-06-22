@@ -35,3 +35,20 @@ export const HEALTH_CONDITION = {
     },
   ],
 } as const;
+
+export const ADOPTION_STATUS = {
+  options: [
+    {
+      label: 'Available for Adoption 🏡',
+      value: 'Ready',
+    },
+    {
+      label: 'Pending Adoption 🕒',
+      value: 'Pending',
+    },
+    {
+      label: 'Adopted 🎉',
+      value: 'Adopted',
+    },
+  ],
+} as const;

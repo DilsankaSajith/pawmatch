@@ -35,7 +35,7 @@ enum Health_Condition {
 enum Adoption_Status {
   Ready
   Pending
-  Not_Ready
+  Adopted
 }
 
 model Report {
@@ -88,10 +88,11 @@ model User {
 model Pet {
   id                 String           @id @default(cuid())
   name               String
-  age                Int
+  age                String
   breed              String
   gender             Gender           @default(Male)
   description        String
+  address            String
   location           Location?        @relation(fields: [locationId], references: [id])
   adoptionStatus     Adoption_Status  @default(Ready)
   addedBy            User             @relation(fields: [userId], references: [id])

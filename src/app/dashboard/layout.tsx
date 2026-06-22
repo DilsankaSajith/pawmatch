@@ -41,7 +41,7 @@ const SIDEBAR_ITEMS: SidebarCategory[] = [
   },
 ]
 
-import { FilterSidebar } from "../../components/browse-pets/filter-sidebar"
+import { FilterSidebar } from "../../components/filter-sidebar"
 
 const Sidebar = ({ onClose }: { onClose?: () => void }) => {
   return (
