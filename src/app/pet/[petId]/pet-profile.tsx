@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { Pet } from '@/types';
+import AdoptionCompletionModal from './adoption-completion-modal';
 
 const pet = mockPets[0];
 
@@ -145,12 +146,11 @@ const PetProfilePage = ({ pet }: { pet: Pet }) => {
 
               <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
-              <ShinyButton
-                href="/dashboard"
-                className="relative z-10 h-14 w-full max-w-xs text-base shadow-lg transition-shadow duration-300 hover:shadow-xl"
-              >
-                Adopt {pet.name}
-              </ShinyButton>
+              <AdoptionCompletionModal pet={pet}>
+                <ShinyButton className="relative z-10 h-14 w-full max-w-xs text-base shadow-lg transition-shadow duration-300 hover:shadow-xl">
+                  Adopt {pet.name}
+                </ShinyButton>
+              </AdoptionCompletionModal>
             </div>
           </div>
         </div>

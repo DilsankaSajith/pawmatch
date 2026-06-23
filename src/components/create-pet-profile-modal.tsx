@@ -89,7 +89,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
   const [healthCondition, setHealthCondition] = useState<string>('Healthy');
   const [gender, setGender] = useState<string>('Male');
   const [adoptionStatus, setAdoptionStatus] = useState<string>('Ready');
-  const [animalType, setAnimalType] = useState<string | null>(null);
+  const [animalType, setAnimalType] = useState<string>('Dog');
 
   const { mutate: server_createPet, isPending } = useMutation({
     mutationFn: createPetProfile,
@@ -101,6 +101,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
       setHealthCondition('Healthy');
       setGender('Male');
       setAdoptionStatus('Ready');
+      setAnimalType('Dog');
       setIsOpen(false);
     },
     onError: (error) => {
@@ -116,14 +117,13 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
       return;
     }
 
-    console.log(data);
-
     server_createPet({
       ...data,
       healthCondition,
       gender,
       adoptionStatus,
       imageUrl,
+      animalType,
       location:
         data.latitude && data.longitude
           ? { latitude: data.latitude, longitude: data.longitude }
@@ -254,7 +254,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
                 </Field>
 
                 <Field>
-                  <Label htmlFor="description">Gender</Label>
+                  <Label htmlFor="gender">Gender</Label>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
@@ -272,6 +272,32 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setGender('Female')}>
                         Female
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </Field>
+
+                <Field>
+                  <Label htmlFor="animal">Animal Type</Label>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className="w-full justify-between"
+                      >
+                        <span className="text-sm text-zinc-500">
+                          {animalType}
+                        </span>
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem onClick={() => setAnimalType('Dog')}>
+                        Dog
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setAnimalType('Cat')}>
+                        Cat
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

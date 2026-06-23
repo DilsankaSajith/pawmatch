@@ -14,6 +14,7 @@ export interface CreatePetInput {
   breed: string;
   gender: string;
   address: string;
+  animalType: string;
   description: string;
   healthCondition: string;
   adoptionStatus: string;
@@ -51,6 +52,7 @@ export async function createPetProfile(input: CreatePetInput) {
       gender: Gender[input.gender as keyof typeof Gender],
       address: input.address,
       description: input.description,
+      animalType: input.animalType as 'Dog' | 'Cat',
       healthCondition:
         Health_Condition[
           input.healthCondition as keyof typeof Health_Condition

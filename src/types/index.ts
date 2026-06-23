@@ -1,4 +1,4 @@
-export type AnimalType = 'Dog' | 'Cat' | 'Other';
+export type AnimalType = 'Dog' | 'Cat';
 
 export type AdoptionStatus = 'Ready' | 'Pending' | 'Adopted';
 
@@ -39,6 +39,7 @@ export interface Pet {
   gender: Gender;
   description: string;
   address: string;
+  animalType: AnimalType;
   adoptionStatus: AdoptionStatus;
   healthCondition: HealthCondition;
   imageUrl: string | null;

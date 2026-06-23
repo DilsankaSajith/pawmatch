@@ -14,6 +14,11 @@ enum Urgency {
   Urgent
 }
 
+enum Animal_Type {
+  Dog
+  Cat
+}
+
 enum Role {
   Adopter
   Volunteer
@@ -93,6 +98,7 @@ model Pet {
   gender             Gender           @default(Male)
   description        String
   address            String
+  animalType         Animal_Type?     @default(Dog)
   location           Location?        @relation(fields: [locationId], references: [id])
   adoptionStatus     Adoption_Status  @default(Ready)
   addedBy            User             @relation(fields: [userId], references: [id])
