@@ -1,5 +1,6 @@
 'use server';
 
+import { searchPetsBySemantic } from '@/app/dashboard/search-actions';
 import prisma from '@/lib/db';
 import { EmbeddingService } from '@/lib/embedding-service';
 import { auth } from '@clerk/nextjs/server';
@@ -30,48 +31,22 @@ export async function createApplication(petId: string, addedById: string) {
 
   if (!applicant) throw new Error('User not found');
 
-  // Quick test: Generate embedding and store in database
-  // console.log('🚀 Quick test: Generate embedding and store in database\n');
+  // Quick test: Test semantic search
+  // console.log('🔍 Testing semantic search...\n');
 
-  // const service = EmbeddingService.getInstance();
-  // const description =
-  //   'A friendly golden retriever who loves children and playing fetch';
+  // console.log('📝 Test 1: Search for "friendly dog that loves kids"');
+  // const results = await searchPetsBySemantic('friendly dog that loves kids');
 
-  // console.log('📝 Generating embedding for:', description);
-  // const embedding = await service.generateEmbedding(description);
-  // console.log(`✅ Embedding generated: ${embedding.length} dimensions`);
+  // console.log(`✅ Found ${results.length} matching pets\n`);
 
-  // const vectorString = `[${embedding.join(', ')}]`;
-
-  // 3. Create pet using raw SQL (since embedding is Unsupported)
-  // const pet = await prisma.$transaction(async (tx) => {
-  //   // First create the pet without the embedding
-  //   const newPet = await tx.pet.create({
-  //     data: {
-  //       name: 'Test Golden',
-  //       age: '3',
-  //       breed: 'Golden Retriever',
-  //       gender: 'Male',
-  //       description: description,
-  //       address: '123 Test Street',
-  //       animalType: 'Dog',
-  //       healthCondition: 'Healthy',
-  //       adoptionStatus: 'Ready',
-  //       userId: applicant.id,
-  //     },
+  // if (results.length > 0) {
+  //   results.slice(0, 3).forEach((pet: any, index: number) => {
+  //     console.log(
+  //       `${index + 1}. ${pet.name} (Similarity: ${pet.similarity?.toFixed(3)})`,
+  //     );
+  //     console.log(`   ${pet.description.substring(0, 100)}...\n`);
   //   });
-
-  //   // Then update with the embedding using raw SQL
-  //   await tx.$executeRaw`
-  //       UPDATE "Pet"
-  //       SET embedding = ${vectorString}::vector
-  //       WHERE id = ${newPet.id}
-  //     `;
-
-  //   return newPet;
-  // });
-
-  // console.log(`✅ Pet created with ID: ${pet.id}`);
+  // }
 
   const existing = await prisma.application.findFirst({
     where: {

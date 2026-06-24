@@ -35,7 +35,7 @@ export async function searchPetsBySemantic(searchQuery: string) {
     FROM "Pet" p
     LEFT JOIN "User" u ON p."userId" = u.id
     WHERE p.embedding IS NOT NULL
-      AND 1 - (p.embedding <=> ${vectorString}::vector) > 0.3
+      AND 1 - (p.embedding <=> ${vectorString}::vector) > 0.5
     ORDER BY similarity DESC
     LIMIT 20
   `;
