@@ -6,6 +6,7 @@ import { PlusIcon, SearchX } from 'lucide-react';
 import PetCard from '@/components/pet-card';
 import { CreatePetProfileModal } from '@/components/create-pet-profile-modal';
 import PetList from '@/components/pet-list';
+import PetSearch from '@/components/pet-search';
 
 const page = async () => {
   const auth = await currentUser();
@@ -27,6 +28,7 @@ const page = async () => {
         </CreatePetProfileModal>
       }
     >
+      <PetSearch />
       <PetList />
     </DashboardPage>
   );
