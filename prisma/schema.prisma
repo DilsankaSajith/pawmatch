@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
@@ -107,6 +108,8 @@ model Pet {
   healthCondition    Health_Condition @default(Healthy)
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
+
+  embedding Unsupported("vector(384)")?
 
   locationId   String?
   userId       String
