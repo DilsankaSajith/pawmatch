@@ -44,6 +44,7 @@ export interface Pet {
   healthCondition: HealthCondition;
   imageUrl: string | null;
   createdAt: Date;
+  embedding?: number[] | null;
   location?: {
     id: string;
     latitude: number;
