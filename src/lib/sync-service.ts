@@ -1,11 +1,9 @@
 import { syncOfflineReports } from '@/app/report/upload/actions';
 import { offlineStorage } from './offline-storage';
-import { useQueryClient } from '@tanstack/react-query';
 
 export const syncService = {
   syncReports: async () => {
     const unsynced = offlineStorage.getUnsyncedReports();
-    const queryClient = useQueryClient();
 
     if (unsynced.length === 0) {
       return { synced: 0, failed: 0 };
@@ -23,8 +21,6 @@ export const syncService = {
         failed++;
       }
     }
-
-    queryClient.invalidateQueries({ queryKey: ['offlineReports'] });
 
     return { synced, failed };
   },
