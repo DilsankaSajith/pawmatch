@@ -2,6 +2,7 @@
 
 import prisma from '@/lib/db';
 import { AnalysisResult } from '@/types';
+import { OfflineReport } from '@/types/offline-report';
 
 export const postReport = async ({
   imageUrl,
@@ -37,3 +38,24 @@ export const postReport = async ({
 
   return report;
 };
+
+export async function syncOfflineReports(report: OfflineReport) {
+  const created = await prisma.report.create({
+    data: {
+      animalType: report.animalType,
+      animalCount: 1,
+      environment: 'Offline Report',
+      urgency: 'Medium',
+      description: report.description,
+      timeStamp: new Date(report.createdAt),
+      location: {
+        create: {
+          latitude: report.location.lat,
+          longitude: report.location.lng,
+        },
+      },
+    },
+  });
+
+  return { success: true, data: created };
+}

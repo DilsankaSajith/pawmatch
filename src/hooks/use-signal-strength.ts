@@ -2,40 +2,37 @@
 
 import { useEffect, useState } from 'react';
 
-type SignalStrength = 'strong' | 'weak' | 'none';
-
 export function useSignalStrength() {
-  const [signal, setSignal] = useState<SignalStrength>('strong');
-  const [isOnline, setIsOnline] = useState<boolean>(true);
+  const [signal, setSignal] = useState<'strong' | 'weak' | 'none'>('strong');
 
   useEffect(() => {
-    const checkConnection = () => {
-      setIsOnline(navigator.onLine);
+    const checkSignal = async () => {
       if (!navigator.onLine) {
         setSignal('none');
-      } else {
-        fetch('/api/ping', {
-          method: 'HEAD',
-          cache: 'no-store',
-        })
-          .then(() => setSignal('strong'))
-          .catch(() => setSignal('weak'));
+        return;
+      }
+
+      try {
+        await fetch('/api/ping', { method: 'HEAD', cache: 'no-store' });
+        setSignal('strong');
+      } catch (error) {
+        setSignal('weak');
       }
     };
 
-    checkConnection();
+    checkSignal();
 
-    window.addEventListener('online', checkConnection);
-    window.addEventListener('offline', () => {
-      setIsOnline(false);
-      setSignal('none');
-    });
+    const handleOnline = () => checkSignal();
+    const handleOffline = () => setSignal('none');
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
 
     return () => {
-      window.removeEventListener('online', checkConnection);
-      window.removeEventListener('offline', () => {});
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
     };
   }, []);
 
-  return { signal, isOnline };
+  return { signal };
 }

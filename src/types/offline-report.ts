@@ -8,10 +8,4 @@ export interface OfflineReport {
   };
   createdAt: string;
   synced: boolean;
-  syncAttempts: number;
-}
-
-export interface OfflineReportFormData {
-  animalType: 'Dog' | 'Cat' | 'Other';
-  description: string;
 }
