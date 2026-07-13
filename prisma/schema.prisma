@@ -20,6 +20,12 @@ enum Animal_Type {
   Cat
 }
 
+enum Application_Status {
+  Pending
+  Approved
+  Rejected
+}
+
 enum Role {
   Adopter
   Volunteer
@@ -117,11 +123,12 @@ model Pet {
 }
 
 model Application {
-  id          String @id @default(cuid())
-  pet         Pet    @relation(fields: [petId], references: [id])
-  applicant   User   @relation("ApplicantApplications", fields: [applicantId], references: [id])
-  addedBy     User   @relation("AddedByApplications", fields: [addedById], references: [id])
+  id          String             @id @default(cuid())
+  pet         Pet                @relation(fields: [petId], references: [id])
+  applicant   User               @relation("ApplicantApplications", fields: [applicantId], references: [id])
+  addedBy     User               @relation("AddedByApplications", fields: [addedById], references: [id])
   petId       String
   applicantId String
   addedById   String
+  status      Application_Status @default(Pending)
 }

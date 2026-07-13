@@ -1,49 +1,70 @@
-"use client"
+'use client';
 
-import { buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import { UserButton } from "@clerk/nextjs"
-import { Gem, Home, Key, LucideIcon, Menu, Settings, X } from "lucide-react"
-import Link from "next/link"
-import { PropsWithChildren, useState } from "react"
-import { Drawer } from "vaul"
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { useAuth, UserButton } from '@clerk/nextjs';
+import {
+  Cat,
+  Gem,
+  Home,
+  Key,
+  LucideIcon,
+  Map,
+  Menu,
+  Settings,
+  X,
+} from 'lucide-react';
+import Link from 'next/link';
+import { PropsWithChildren, useState } from 'react';
+import { Drawer } from 'vaul';
 
 interface SidebarItem {
-  href: string
-  icon: LucideIcon
-  text: string
+  href: string;
+  icon: LucideIcon;
+  text: string;
 }
 
 interface SidebarCategory {
-  category: string
-  items: SidebarItem[]
+  category: string;
+  items: SidebarItem[];
 }
 
 const SIDEBAR_ITEMS: SidebarCategory[] = [
   {
-    category: "Overview",
-    items: [{ href: "/dashboard", icon: Home, text: "Dashboard" }],
-  },
-  {
-    category: "Account",
-    items: [{ href: "/dashboard/upgrade", icon: Gem, text: "Upgrade" }],
-  },
-  {
-    category: "Settings",
+    category: 'Overview',
     items: [
-      { href: "/dashboard/api-key", icon: Key, text: "API Key" },
+      { href: '/dashboard', icon: Home, text: 'Dashboard' },
+      { href: '/hotspot', icon: Map, text: 'Hotspot Map' },
+      { href: '/applications', icon: Cat, text: 'Applications' },
+    ],
+  },
+  {
+    category: 'Account',
+    items: [{ href: '/dashboard/upgrade', icon: Gem, text: 'Upgrade' }],
+  },
+  {
+    category: 'Settings',
+    items: [
+      { href: '/dashboard/api-key', icon: Key, text: 'API Key' },
       {
-        href: "/dashboard/account-settings",
+        href: '/dashboard/account-settings',
         icon: Settings,
-        text: "Account Settings",
+        text: 'Account Settings',
       },
     ],
   },
-]
+];
 
-import { FilterSidebar } from "../../components/filter-sidebar"
+import { FilterSidebar } from '../../components/filter-sidebar';
+import { useQuery } from '@tanstack/react-query';
+import { getApplications } from '../pet/[petId]/actions';
 
 const Sidebar = ({ onClose }: { onClose?: () => void }) => {
+  const { data: applications = [], isPending } = useQuery({
+    queryKey: ['applications'],
+    queryFn: getApplications,
+  });
+
   return (
     <div className="space-y-4 md:space-y-6 relative z-20 flex flex-col h-full">
       {/* logo */}
@@ -65,13 +86,19 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
                     key={i}
                     href={item.href}
                     className={cn(
-                      buttonVariants({ variant: "ghost" }),
-                      "w-full justify-start group flex items-center gap-x-2.5 rounded-md px-2 py-1.5 text-sm font-medium leading-6 text-zinc-700 hover:bg-gray-50 transition"
+                      buttonVariants({ variant: 'ghost' }),
+                      'w-full justify-start group flex items-center gap-x-2.5 rounded-md px-2 py-1.5 text-sm font-medium leading-6 text-zinc-700 hover:bg-gray-50 transition',
                     )}
                     onClick={onClose}
                   >
                     <item.icon className="size-4 text-zinc-500 group-hover:text-zinc-700" />
                     {item.text}
+
+                    {!isPending && item.text === 'Applications' && (
+                      <span className="ml-auto shadow-md flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-xs font-medium text-white">
+                        {applications.length}
+                      </span>
+                    )}
                   </Link>
                 ))}
               </div>
@@ -90,17 +117,17 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
           showName
           appearance={{
             elements: {
-              userButtonBox: "flex-row",
+              userButtonBox: 'flex-row',
             },
           }}
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Layout = ({ children }: PropsWithChildren) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
     <div className="relative h-screen flex flex-col md:flex-row bg-white overflow-hidden">
@@ -153,7 +180,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         </Modal> */}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

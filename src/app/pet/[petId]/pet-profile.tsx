@@ -199,7 +199,6 @@ const PetProfilePage = ({ pet }: { pet: Pet }) => {
             icon={<User className="h-5 w-5 text-slate-500" />}
             title="Added By"
             value={pet.addedBy.email}
-            subtitle="Shelter / Volunteer ID"
           />
           <DetailCard
             icon={
