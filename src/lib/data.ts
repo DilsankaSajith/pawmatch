@@ -1,10 +1,10 @@
-const SIMULATED_DELAY = 10000;
+const SIMULATED_DELAY = 5000;
 
 export const demoResult = {
   animalCount: 4,
   animalType: 'cat',
   description:
-    'Four young kittens are found huddled in a cardboard box outdoors. They appear to be at a highly vulnerable age and lack adequate protection from predators or the elements. One kitten in the foreground exhibits possible signs of an eye infection.',
+    'Four very young kittens, approximately 4-6 weeks old, have been left in a cardboard box. At least one kitten shows visible signs of a possible ocular infection. They are highly vulnerable and require immediate rescue and veterinary care.',
   environment: 'Outdoor, exposed on the ground in a cardboard box',
   urgency: 'High',
   visibleIssues: ['potential eye infection', 'vulnerability due to young age'],

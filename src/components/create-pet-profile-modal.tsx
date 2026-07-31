@@ -1,6 +1,6 @@
 'use client';
 
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -58,6 +58,15 @@ type PetFormFields = z.infer<typeof schema>;
 export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
   const { getLocation, isLoading: isLocating } = useGeolocation();
   const [isOpen, setIsOpen] = useState(false);
+
+  // const [imageUrl, setImageUrl] = useState<string | null>('');
+
+  // useEffect(() => {
+  //   const storedImageUrl = localStorage.getItem('uploaded-image-url')
+  //   if(storedImageUrl){
+  //     setImageUrl(storedImageUrl)
+  //   }
+  // }, [])
 
   const {
     register,
