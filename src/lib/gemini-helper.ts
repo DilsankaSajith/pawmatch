@@ -4,7 +4,6 @@ import { AllowedType } from '@/app/api/struct-data/types';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY!);
-// const genAI = new GoogleGenerativeAI('AIzaSyD0h5blDODYS1np-ELpbvT6dfOi1Ma14fk');
 
 export async function structureUnstructuredData(
   text: string,
