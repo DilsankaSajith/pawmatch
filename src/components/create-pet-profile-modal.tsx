@@ -33,6 +33,7 @@ import { toast } from 'sonner';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createPetProfile } from '@/app/dashboard/actions';
+import { PET_FORMAT } from '@/app/api/struct-data/types';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -100,6 +101,38 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
   const [adoptionStatus, setAdoptionStatus] = useState<string>('Ready');
   const [animalType, setAnimalType] = useState<string>('Dog');
 
+  const [pastedText, setPastedText] = useState<string>('');
+
+  // React query for mutation for structured data api
+  const { mutate: extractDetails, isPending: isExtracting } = useMutation({
+    mutationFn: async (text: string) => {
+      const response = await fetch('http://localhost:3000/api/struct-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: text,
+          format: PET_FORMAT,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to structure data');
+      }
+
+      return response.json();
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success('Pet details extracted successfully! 🎉');
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Failed to extract details');
+    },
+  });
+
   const { mutate: server_createPet, isPending } = useMutation({
     mutationFn: createPetProfile,
     onSuccess: () => {
@@ -117,6 +150,16 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
       toast.error(error.message || 'Something went wrong. Please try again.');
     },
   });
+
+  // Handle extract details
+  const handleExtractDetails = () => {
+    if (!pastedText.trim()) {
+      toast.warning('Please paste some text about your pet first.');
+      return;
+    }
+
+    extractDetails(pastedText);
+  };
 
   const onSubmit: SubmitHandler<PetFormFields> = async (data) => {
     const imageUrl = localStorage.getItem('uploaded-image-url');
@@ -158,6 +201,27 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
             <FieldGroup>
               <ImageUploader />
             </FieldGroup>
+
+            <form>
+              <Field className="col-span-2 mb-3 mt-[-2rem]">
+                <textarea
+                  id="auto-text-extractor"
+                  placeholder="If you already have pet info as a text, please provide it here. We will extract the details for you and fill in the form automatically."
+                  rows={4}
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={pastedText}
+                  onChange={(e) => setPastedText(e.target.value)}
+                />
+              </Field>
+              <Button
+                className="mt-2 mb-2"
+                type="button"
+                onClick={handleExtractDetails}
+                disabled={isExtracting || !pastedText.trim()}
+              >
+                {isExtracting ? 'Extracting...' : 'Extract Details'}
+              </Button>
+            </form>
 
             <FieldGroup className="mt-6">
               <div className="grid grid-cols-2 gap-4">
