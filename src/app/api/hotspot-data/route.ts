@@ -1,7 +1,8 @@
 import prisma from '@/lib/db';
+import { withApiKeyAuth } from '@/lib/auth/with-api-key';
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+export const GET = withApiKeyAuth(async () => {
   const hotspots = await prisma.report.findMany({
     where: {
       location: { isNot: null },
@@ -26,4 +27,4 @@ export async function GET() {
   });
 
   return NextResponse.json(hotspots);
-}
+});

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { PropsWithChildren, useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { PropsWithChildren, useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -9,45 +9,45 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Field, FieldGroup } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/dialog';
+import { Field, FieldGroup } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { ChevronsUpDown, Loader2, Sparkles } from "lucide-react";
+} from './ui/dropdown-menu';
+import { ChevronsUpDown, Loader2, Sparkles } from 'lucide-react';
 import {
   ADOPTION_STATUS,
   HEALTH_CONDITION,
-} from "@/validators/option-validator";
+} from '@/validators/option-validator';
 
-import { SubmitHandler, useForm } from "react-hook-form";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import ImageUploader from "./image-uploader";
-import { toast } from "sonner";
-import { useGeolocation } from "@/hooks/useGeolocation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPetProfile } from "@/app/dashboard/actions";
-import { PET_FORMAT } from "@/app/api/struct-data/types";
+import { SubmitHandler, useForm } from 'react-hook-form';
+import z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import ImageUploader from './image-uploader';
+import { toast } from 'sonner';
+import { useGeolocation } from '@/hooks/useGeolocation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createPetProfile } from '@/app/dashboard/actions';
+import { PET_FORMAT } from '@/app/api/struct-data/types';
 
 const schema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().min(1, 'Name is required'),
   age: z
     .string()
-    .min(1, "Age must be a positive number")
-    .max(3, "Age must be realistic"),
-  breed: z.string().min(1, "Breed is required"),
-  address: z.string().min(1, "Address is required"),
+    .min(1, 'Age must be a positive number')
+    .max(3, 'Age must be realistic'),
+  breed: z.string().min(1, 'Breed is required'),
+  address: z.string().min(1, 'Address is required'),
   lastVaccinatedDate: z.string().optional(),
   description: z
     .string()
-    .min(1, "Add a little description about your fury friend ")
-    .max(500, "Description must be less than 500 characters"),
+    .min(1, 'Add a little description about your fury friend ')
+    .max(500, 'Description must be less than 500 characters'),
   latitude: z.string().optional(),
   longitude: z.string().optional(),
 });
@@ -82,34 +82,35 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
 
   const queryClient = useQueryClient();
 
-  const latitude = watch("latitude");
-  const longitude = watch("longitude");
+  const latitude = watch('latitude');
+  const longitude = watch('longitude');
 
   const handleGetLocation = async () => {
     try {
       const { lat, lng } = await getLocation();
-      setValue("latitude", String(lat));
-      setValue("longitude", String(lng));
-      toast.success("Location captured!");
+      setValue('latitude', String(lat));
+      setValue('longitude', String(lng));
+      toast.success('Location captured!');
     } catch {
-      toast.error("Could not get your location. Enter it manually.");
+      toast.error('Could not get your location. Enter it manually.');
     }
   };
 
-  const [healthCondition, setHealthCondition] = useState<string>("Healthy");
-  const [gender, setGender] = useState<string>("Male");
-  const [adoptionStatus, setAdoptionStatus] = useState<string>("Ready");
-  const [animalType, setAnimalType] = useState<string>("Dog");
+  const [healthCondition, setHealthCondition] = useState<string>('Healthy');
+  const [gender, setGender] = useState<string>('Male');
+  const [adoptionStatus, setAdoptionStatus] = useState<string>('Ready');
+  const [animalType, setAnimalType] = useState<string>('Dog');
 
-  const [pastedText, setPastedText] = useState<string>("");
+  const [pastedText, setPastedText] = useState<string>('');
 
   // React query for mutation for structured data api
   const { mutate: extractDetails, isPending: isExtracting } = useMutation({
     mutationFn: async (text: string) => {
-      const response = await fetch("http://localhost:3000/api/struct-data", {
-        method: "POST",
+      const response = await fetch('http://localhost:3000/api/struct-data', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          'x-api-key': 'f94b0ac9-f2b2-4f47-af58-64d3e0ec44c3',
         },
         body: JSON.stringify({
           text: text,
@@ -119,7 +120,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to structure data");
+        throw new Error(errorData.error || 'Failed to structure data');
       }
 
       return response.json();
@@ -131,14 +132,14 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
         const opts = { shouldDirty: true, shouldValidate: true } as const;
 
         // Set react-hook-form fields
-        if (extracted.name) setValue("name", extracted.name, opts);
-        if (extracted.age) setValue("age", String(extracted.age), opts);
-        if (extracted.breed) setValue("breed", extracted.breed, opts);
-        if (extracted.address) setValue("address", extracted.address, opts);
+        if (extracted.name) setValue('name', extracted.name, opts);
+        if (extracted.age) setValue('age', String(extracted.age), opts);
+        if (extracted.breed) setValue('breed', extracted.breed, opts);
+        if (extracted.address) setValue('address', extracted.address, opts);
         if (extracted.description)
-          setValue("description", extracted.description, opts);
+          setValue('description', extracted.description, opts);
         if (extracted.lastVaccinatedDate)
-          setValue("lastVaccinatedDate", extracted.lastVaccinatedDate, opts);
+          setValue('lastVaccinatedDate', extracted.lastVaccinatedDate, opts);
 
         // Set dropdown state values
         if (extracted.gender) setGender(extracted.gender);
@@ -147,35 +148,35 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
         if (extracted.animalType) setAnimalType(extracted.animalType);
       }
 
-      toast.success("Pet details extracted successfully! 🎉");
+      toast.success('Pet details extracted successfully! 🎉');
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to extract details");
+      toast.error(error.message || 'Failed to extract details');
     },
   });
 
   const { mutate: server_createPet, isPending } = useMutation({
     mutationFn: createPetProfile,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["pets"] });
-      toast.success("Pet profile created successfully! 🎉");
-      localStorage.removeItem("uploaded-image-url");
+      queryClient.invalidateQueries({ queryKey: ['pets'] });
+      toast.success('Pet profile created successfully! 🎉');
+      localStorage.removeItem('uploaded-image-url');
       reset();
-      setHealthCondition("Healthy");
-      setGender("Male");
-      setAdoptionStatus("Ready");
-      setAnimalType("Dog");
+      setHealthCondition('Healthy');
+      setGender('Male');
+      setAdoptionStatus('Ready');
+      setAnimalType('Dog');
       setIsOpen(false);
     },
     onError: (error) => {
-      toast.error(error.message || "Something went wrong. Please try again.");
+      toast.error(error.message || 'Something went wrong. Please try again.');
     },
   });
 
   // Handle extract details
   const handleExtractDetails = () => {
     if (!pastedText.trim()) {
-      toast.warning("Please paste some text about your pet first.");
+      toast.warning('Please paste some text about your pet first.');
       return;
     }
 
@@ -183,10 +184,10 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
   };
 
   const onSubmit: SubmitHandler<PetFormFields> = async (data) => {
-    const imageUrl = localStorage.getItem("uploaded-image-url");
+    const imageUrl = localStorage.getItem('uploaded-image-url');
 
     if (!imageUrl) {
-      toast.error("Please upload an image for your furry friend.");
+      toast.error('Please upload an image for your furry friend.');
       return;
     }
 
@@ -245,7 +246,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
                 <div className="relative">
                   <textarea
                     id="auto-text-extractor"
-                    placeholder="e.g. &quot;Meet Bella, a 2-year-old female Golden Retriever from Colombo. She's healthy, vaccinated on 2024-12-01, and loves belly rubs...&quot;"
+                    placeholder='e.g. "Meet Bella, a 2-year-old female Golden Retriever from Colombo. She&apos;s healthy, vaccinated on 2024-12-01, and loves belly rubs..."'
                     rows={3}
                     className="w-full resize-none rounded-lg border border-brand-200/50 bg-white/70 px-3.5 py-2.5 text-sm text-gray-700 placeholder:text-gray-300 shadow-inner backdrop-blur-sm transition-all duration-200 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-300/30"
                     value={pastedText}
@@ -289,7 +290,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
                   <Input
                     id="name"
                     placeholder="e.g. Captain"
-                    {...register("name")}
+                    {...register('name')}
                   />
                   {errors.name && (
                     <p className="text-xs text-red-500">
@@ -300,7 +301,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
 
                 <Field>
                   <Label htmlFor="age">Age</Label>
-                  <Input id="age" placeholder="e.g. 3" {...register("age")} />
+                  <Input id="age" placeholder="e.g. 3" {...register('age')} />
                   {errors.age && (
                     <p className="text-xs text-red-500">{errors.age.message}</p>
                   )}
@@ -311,7 +312,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
                   <Input
                     id="breed"
                     placeholder="e.g. Tabby Cat"
-                    {...register("breed")}
+                    {...register('breed')}
                   />
                   {errors.breed && (
                     <p className="text-xs text-red-500">
@@ -327,7 +328,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
                   <Input
                     id="lastVaccinatedDate"
                     type="date"
-                    {...register("lastVaccinatedDate")}
+                    {...register('lastVaccinatedDate')}
                   />
                   {errors.lastVaccinatedDate && (
                     <p className="text-xs text-red-500">
@@ -341,7 +342,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
                   <Input
                     id="address"
                     placeholder="e.g. 123 Park Lane"
-                    {...register("address")}
+                    {...register('address')}
                   />
                   {errors.address && (
                     <p className="text-xs text-red-500">
@@ -399,10 +400,10 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem onClick={() => setGender("Male")}>
+                      <DropdownMenuItem onClick={() => setGender('Male')}>
                         Male
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setGender("Female")}>
+                      <DropdownMenuItem onClick={() => setGender('Female')}>
                         Female
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -425,10 +426,10 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem onClick={() => setAnimalType("Dog")}>
+                      <DropdownMenuItem onClick={() => setAnimalType('Dog')}>
                         Dog
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setAnimalType("Cat")}>
+                      <DropdownMenuItem onClick={() => setAnimalType('Cat')}>
                         Cat
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -474,7 +475,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
                   placeholder="e.g. Loves to play fetch and cuddle"
                   rows={4}
                   className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  {...register("description")}
+                  {...register('description')}
                 />
                 {errors.description && (
                   <p className="text-xs text-red-500">
@@ -517,7 +518,7 @@ export const CreatePetProfileModal = ({ children }: PropsWithChildren) => {
                     Saving...
                   </>
                 ) : (
-                  "Add pet"
+                  'Add pet'
                 )}
               </Button>
             </DialogFooter>

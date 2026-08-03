@@ -1,7 +1,7 @@
-"use server";
+'use server';
 
-import { AllowedType } from "@/app/api/struct-data/types";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { AllowedType } from '@/app/api/struct-data/types';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY!);
 
@@ -11,11 +11,11 @@ export async function structureUnstructuredData(
 ) {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-3-flash-preview",
+      model: 'gemini-3-flash-preview',
     });
     const formatDescription = Object.entries(format)
       .map(([key, type]) => `  "${key}": "${type}"`)
-      .join(",\n");
+      .join(',\n');
 
     const prompt = `You are a data extraction AI. Extract information from the given text and structure it according to the provided format.
 
@@ -50,7 +50,7 @@ Return the extracted data as JSON.`;
     // Extract JSON from response
     const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      throw new Error("No JSON found in response");
+      throw new Error('No JSON found in response');
     }
 
     const parsedData = JSON.parse(jsonMatch[0]);
@@ -61,11 +61,11 @@ Return the extracted data as JSON.`;
       rawResponse: textResponse,
     };
   } catch (error) {
-    console.error("Structuring Data Error:", error);
+    console.error('Structuring Data Error:', error);
     return {
       success: false,
       error:
-        error instanceof Error ? error.message : "Failed to structure data",
+        error instanceof Error ? error.message : 'Failed to structure data',
       rawResponse: null,
     };
   }
@@ -77,7 +77,7 @@ export async function fileToBase64(file: File): Promise<string> {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      const base64 = (reader.result as string).split(",")[1];
+      const base64 = (reader.result as string).split(',')[1];
       resolve(base64);
     };
     reader.onerror = reject;
@@ -88,7 +88,7 @@ export async function fileToBase64(file: File): Promise<string> {
 export async function analyzeStrayImage(imageBase64: string, mimeType: string) {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-3-flash-preview",
+      model: 'gemini-3-flash-preview',
     });
     const prompt = `
       You are analyzing animal photos for a stray rescue platform in Sri Lanka.
@@ -124,20 +124,20 @@ export async function analyzeStrayImage(imageBase64: string, mimeType: string) {
     const response = await result.response;
     const text = response.text();
 
-    const jsonStart = text.indexOf("{");
-    const jsonEnd = text.lastIndexOf("}") + 1;
+    const jsonStart = text.indexOf('{');
+    const jsonEnd = text.lastIndexOf('}') + 1;
     const jsonString = text.substring(jsonStart, jsonEnd);
 
     return JSON.parse(jsonString);
   } catch (error) {
-    console.error("Gemini API Error:", error);
+    console.error('Gemini API Error:', error);
     return {
-      animalType: "unknown",
+      animalType: 'unknown',
       animalCount: 1,
-      visibleIssues: ["Unable to analyze"],
-      environment: "unknown",
-      urgency: "Medium" as const,
-      description: "Analysis failed",
+      visibleIssues: ['Unable to analyze'],
+      environment: 'unknown',
+      urgency: 'Medium' as const,
+      description: 'Analysis failed',
     };
   }
 }

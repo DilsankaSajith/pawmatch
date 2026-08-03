@@ -1,3 +1,4 @@
+import { withApiKeyAuth } from '@/lib/auth/with-api-key';
 import { NextRequest, NextResponse } from 'next/server';
 import z from 'zod';
 
@@ -64,7 +65,31 @@ const getLabel = (score: number): 'similar' | 'not_relevant' | 'maybe' => {
   return 'maybe';
 };
 
-export async function POST(req: NextRequest) {
+// export async function POST(req: NextRequest) {
+//   try {
+//     const body = await req.json();
+//     const { text1, text2 } = similarityRequestSchema.parse(body);
+
+//     const emb1 = await getEmbedding(text1);
+//     const emb2 = await getEmbedding(text2);
+
+//     const score = cosineSimilarity(emb1, emb2);
+//     const label = getLabel(score);
+
+//     const response = { score, label };
+
+//     similarityResponseSchema.parse(response);
+
+//     return NextResponse.json(response, { status: 200 });
+//   } catch (err: any) {
+//     return NextResponse.json(
+//       { error: err.message ?? 'Internal server error. Please try again later' },
+//       { status: 400 },
+//     );
+//   }
+// }
+
+export const POST = withApiKeyAuth(async (req: NextRequest) => {
   try {
     const body = await req.json();
     const { text1, text2 } = similarityRequestSchema.parse(body);
@@ -86,4 +111,4 @@ export async function POST(req: NextRequest) {
       { status: 400 },
     );
   }
-}
+});
