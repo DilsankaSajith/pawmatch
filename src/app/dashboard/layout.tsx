@@ -13,6 +13,7 @@ import {
   Menu,
   Settings,
   X,
+  BookOpen,
 } from 'lucide-react';
 import Link from 'next/link';
 import { PropsWithChildren, useState } from 'react';
@@ -47,9 +48,9 @@ const SIDEBAR_ITEMS: SidebarCategory[] = [
     items: [
       { href: '/dashboard/api-key', icon: Key, text: 'API Key' },
       {
-        href: '/dashboard/account-settings',
-        icon: Settings,
-        text: 'Account Settings',
+        href: '/dashboard/documentation',
+        icon: BookOpen,
+        text: 'Documentation',
       },
     ],
   },
@@ -67,11 +68,6 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
 
   return (
     <div className="space-y-4 md:space-y-6 relative z-20 flex flex-col h-full">
-      {/* logo */}
-      <p className="hidden sm:block text-lg/7 font-semibold text-brand-900">
-        Paw<span className="text-brand-700">Match</span>
-      </p>
-
       {/* navigation items */}
       <div className="flex-grow overflow-y-auto pr-2 scrollbar-hide">
         <ul>
@@ -159,25 +155,31 @@ const Layout = ({ children }: PropsWithChildren) => {
           </div>
         </div>
 
-        {/* <Modal
-          className="p-4"
-          showModal={isDrawerOpen}
-          setShowModal={setIsDrawerOpen}
+        <Drawer.Root
+          direction="right"
+          open={isDrawerOpen}
+          onOpenChange={setIsDrawerOpen}
         >
-          <div className="flex justify-between items-center mb-4">
-            <p className="text-lg/7 font-semibold text-brand-900">
-              Ping<span className="text-brand-700">Panda</span>
-            </p>
-            <button
-              aria-label="Close modal"
-              onClick={() => setIsDrawerOpen(false)}
-            >
-              <X className="size-6" />
-            </button>
-          </div>
+          <Drawer.Portal>
+            <Drawer.Overlay className="fixed inset-0 bg-black/40 z-40" />
+            <Drawer.Content className="fixed right-0 top-0 bottom-0 w-[280px] bg-white z-50 p-6 flex flex-col shadow-xl">
+              <div className="flex justify-between items-center mb-4">
+                <p className="text-lg/7 font-semibold text-brand-900">
+                  Paw<span className="text-brand-700">Match</span>
+                </p>
+                <button
+                  aria-label="Close menu"
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="text-gray-500 hover:text-gray-700 transition-colors"
+                >
+                  <X className="size-6" />
+                </button>
+              </div>
 
-          <Sidebar />
-        </Modal> */}
+              <Sidebar onClose={() => setIsDrawerOpen(false)} />
+            </Drawer.Content>
+          </Drawer.Portal>
+        </Drawer.Root>
       </div>
     </div>
   );
