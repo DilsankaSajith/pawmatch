@@ -37,7 +37,7 @@ export interface StructuredDataResponse {
 // Pet-specific format (to be reused)
 export const PET_FORMAT = {
   name: 'string',
-  age: 'string',
+  age: 'number',
   breed: 'string',
   gender: 'enum',
   description: 'string',

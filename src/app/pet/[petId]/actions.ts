@@ -1,6 +1,8 @@
 'use server';
 
 import prisma from '@/lib/db';
+import { sendEmail } from '@/lib/email';
+import { newApplicationEmail } from '@/lib/email-templates';
 import { auth } from '@clerk/nextjs/server';
 
 export async function getPetProfileById(id: string) {
@@ -50,7 +52,18 @@ export async function createApplication(petId: string, addedById: string) {
       applicantId: applicant.id,
       addedById,
     },
+    include: {
+      pet: true,
+      applicant: true,
+      addedBy: true,
+    },
   });
+
+  const { subject, html } = newApplicationEmail(
+    application.pet.name,
+    applicant.email,
+  );
+  await sendEmail(application.addedBy.email, subject, html);
 
   return application;
 }
