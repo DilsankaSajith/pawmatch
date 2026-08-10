@@ -16,7 +16,7 @@ import {
   BookOpen,
 } from 'lucide-react';
 import Link from 'next/link';
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useState, Suspense } from 'react';
 import { Drawer } from 'vaul';
 
 interface SidebarItem {
@@ -103,7 +103,9 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
         </ul>
 
         {/* Filter Sidebar (only visible on /dashboard) */}
-        <FilterSidebar />
+        <Suspense>
+          <FilterSidebar />
+        </Suspense>
       </div>
 
       <div className="flex flex-col">
