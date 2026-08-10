@@ -25,6 +25,7 @@ export type UserRole = 'Adopter' | 'Volunteer' | 'Shelter_Admin' | 'Developer';
 type User = {
   apiKey: string | null;
   createdAt: Date;
+  updatedAt: Date;
   email: string;
   externalId: string | null;
   id: string;
@@ -39,7 +40,7 @@ export interface Pet {
   gender: Gender;
   description: string;
   address: string;
-  animalType: AnimalType;
+  animalType: AnimalType | null;
   adoptionStatus: AdoptionStatus;
   healthCondition: HealthCondition;
   imageUrl: string | null;
