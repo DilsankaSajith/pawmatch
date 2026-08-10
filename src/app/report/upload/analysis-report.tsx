@@ -1,6 +1,9 @@
 import { AnalysisResult } from '@/types';
 import { useEffect, useState } from 'react';
-import ReportMap from '../../../components/report-map';
+import dynamic from 'next/dynamic';
+const ReportMap = dynamic(() => import('../../../components/report-map'), {
+  ssr: false,
+});
 import { MaxWidthWrapper } from '@/components/max-width-wrapper';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Label } from '@/components/ui/label';

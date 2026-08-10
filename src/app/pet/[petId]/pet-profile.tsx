@@ -1,7 +1,7 @@
 'use client';
 
 import { DashboardPage } from '@/components/dashboard-page';
-import PetLocationMap from '@/components/pet-location-map';
+import PetLocationMap from '@/components/pet-location-map-wrapper';
 import ShinyButton from '@/components/shiny-button';
 import { mockPets } from '@/lib/pet-mock-data';
 import {
